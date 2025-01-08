@@ -11,23 +11,18 @@ import calcul
 app = FastAPI()
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__),"templates"))
 
-#데이터 폼
-class userID(BaseModel):
-    number:int
+class lookup(BaseModel):
+    number : str
 
 #mainPage
 @app.get("/home",response_class=HTMLResponse)
-async def home(request:Request):
+async def HOME(request:Request):
     return templates.TemplateResponse(name="HCM.html",context={"request":request})
 
-#
-@app.get("/home/PTO",response_class=HTMLResponse)
-async def home(request:Request,user_id:userID):
-    """
-    user_pto = calcul.aboutPTO(user_id.number)
-    html = f"<div>{calcul.usedPTO(user_pto.usedPTO)}</div>"
-    """
-    return HTMLResponse(content=123)
+#연차 조회
+@app.get("/user/")
+async def LOOKUP(ID:lookup):
+    return {"number": ID.number}
 
 if __name__ == "__main__":
     import uvicorn

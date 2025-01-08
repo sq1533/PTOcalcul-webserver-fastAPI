@@ -27,8 +27,10 @@
         <div>
             테스트 테스트
         </div>
-        <input type="number" name="userPTO" id="user_id" hx-get="/home/PTO">
-        <div id="result"></div>
+        <form hx-get="/user/">
+            <input type="text" id="number" name="number">
+            <button type="submit">검색</button>
+        </form>
     </div>
 </body>
 </html>

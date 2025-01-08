@@ -1,7 +1,7 @@
 from datetime import datetime
 
 example = {
-    21093001 : 
+    "21093001" : 
     {
         "name":"서동규",
         "join":"2021-09-30",
@@ -20,7 +20,7 @@ class aboutPTO:
         self.add = example[user]["addPTO"]
 
 #입사 후 전체 연차
-def totalPTO(join:aboutPTO,addPTO:aboutPTO) -> int:
+def totalPTO(join:aboutPTO,addPTO:aboutPTO) -> str:
     today = datetime.now()
     join = join.split("-")
     year = int(join[0])
@@ -30,13 +30,13 @@ def totalPTO(join:aboutPTO,addPTO:aboutPTO) -> int:
         pto = int(today.strftime('%m')) - month + int(addPTO)
     else:
         pto = (workYear-1)*15 + (12 - month) + int(addPTO)
-    return pto
+    return str(pto)
 
 #사용 연차
-def usedPTO(worker:aboutPTO) -> int:
-    return int(worker)
+def usedPTO(worker:aboutPTO) -> str:
+    return worker
 
 #남은 연차
-def leftPTO(tPTO:totalPTO,uPTO:usedPTO) -> int:
-    left = tPTO - uPTO
-    return left
+def leftPTO(tPTO:totalPTO,uPTO:usedPTO) -> str:
+    left = int(tPTO) - int(uPTO)
+    return str(left)
