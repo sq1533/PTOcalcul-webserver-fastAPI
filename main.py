@@ -11,18 +11,19 @@ import calcul
 app = FastAPI()
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__),"templates"))
 
-class lookup(BaseModel):
-    number : str
-
 #mainPage
 @app.get("/home",response_class=HTMLResponse)
 async def HOME(request:Request):
     return templates.TemplateResponse(name="HCM.html",context={"request":request})
 
-#연차 조회
-@app.get("/user/")
-async def LOOKUP(ID:lookup):
-    return {"number": ID.number}
+class User(BaseModel):
+    username: str
+    password: str
+
+@app.post("/submit_data")
+async def create_user(user: User):
+    user = user.username
+    return {"message": "User created successfully!"}
 
 if __name__ == "__main__":
     import uvicorn
