@@ -1,30 +1,31 @@
 import os
-import pandas as pd
-import re
-from fastapi import FastAPI,Request,Form
+import pandas as pd  # Assuming you need pandas for data processing
+import re  # Assuming you need re for data processing
+from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
-import calcul
-
 app = FastAPI()
-templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__),"templates"))
+templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
 
-#mainPage
-@app.get("/home",response_class=HTMLResponse)
-async def HOME(request:Request):
+# MainPage
+@app.get("/home", response_class=HTMLResponse)
+async def HOME(request: Request):
     return templates.TemplateResponse(name="HCM.html",context={"request":request})
+
+@app.get("/{LOOKUP}")
+async def read_item(request: Request,LOOKUP:str):
+    test = LOOKUP+"123"
+    return {"LOOKUP":test}
 
 class User(BaseModel):
     username: str
-    password: str
 
-@app.post("/submit_data")
-async def create_user(user: User):
-    user = user.username
-    return {"message": "User created successfully!"}
+@app.post("/submit")
+async def create_user(request: Request, user: User = Form(...)):
+    return {"message": f"Hello, {user.username}!"}
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app,host="0.0.0.0",port=8081)
+    uvicorn.run(app, host="0.0.0.0", port=8081)

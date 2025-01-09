@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-    <form id="myForm" hx-post="/submit_data" hx-swap="innerHTML">
-        <input type="text" name="username" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit">Submit</button>
-        <div hx-get="response"></div>
+    <input type="text" method="post" hx-get="/LOOKUP{{ LOOKUP }}" hx-target="#results">
+    <div id="results"></div>
+    <button type="submit">데이터 전송</button>
+    <form hx-post="/submit" hx-target="/#submit">
+        <input type="text" name="username">
+        <button type="submit" hx-get="/submit">제출</button>
     </form>
 </body>
 </html>
