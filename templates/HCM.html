@@ -7,9 +7,10 @@
 </head>
 <body>
   <form hx-post="/lookup" hx-target="#results" hx-swap="innerHTML">
+    <input type="text" name="name" placeholder="write..">
     <input type="text" name="number" placeholder="write..">
     <button type="submit">Submit</button>
-    <div id="results"></div>
   </form>
+  <div id="results"></div>
 </body>
 </html>

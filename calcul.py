@@ -20,21 +20,21 @@ class aboutPTO:
         self.add = example[user]["addPTO"]
 
 #입사 후 전체 연차
-def totalPTO(join:aboutPTO,addPTO:aboutPTO) -> str:
+def totalPTO(info:aboutPTO) -> str:
     today = datetime.now()
-    join = join.split("-")
+    join = info.join.split("-")
     year = int(join[0])
     month = int(join[1])
     workYear = int(today.strftime('%Y')) - year
     if workYear == 0:
-        pto = int(today.strftime('%m')) - month + int(addPTO)
+        pto = int(today.strftime('%m')) - month + int(info.add)
     else:
-        pto = (workYear-1)*15 + (12 - month) + int(addPTO)
+        pto = (workYear-1)*15 + (12 - month) + int(info.add)
     return str(pto)
 
 #사용 연차
 def usedPTO(worker:aboutPTO) -> str:
-    return worker
+    return worker.usedPTO
 
 #남은 연차
 def leftPTO(tPTO:totalPTO,uPTO:usedPTO) -> str:
