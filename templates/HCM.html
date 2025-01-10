@@ -6,12 +6,10 @@
   <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-    <input type="text" method="post" hx-get="/LOOKUP{{ LOOKUP }}" hx-target="#results">
+  <form hx-post="/lookup" hx-target="#results" hx-swap="innerHTML">
+    <input type="text" name="number" placeholder="write..">
+    <button type="submit">Submit</button>
     <div id="results"></div>
-    <button type="submit">데이터 전송</button>
-    <form hx-post="/submit" hx-target="/#submit">
-        <input type="text" name="username">
-        <button type="submit" hx-get="/submit">제출</button>
-    </form>
+  </form>
 </body>
 </html>
