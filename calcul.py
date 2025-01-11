@@ -5,8 +5,8 @@ example = {
     {
         "name":"서동규",
         "join":"2021-09-30",
-        "usedPTO":"1",
-        "addPTO":"3"
+        "usedPTO":"10",
+        "addPTO":"4"
     }
 }
 
@@ -40,3 +40,18 @@ def usedPTO(worker:aboutPTO) -> str:
 def leftPTO(tPTO:totalPTO,uPTO:usedPTO) -> str:
     left = int(tPTO) - int(uPTO)
     return str(left)
+
+#사용 연차 누계
+def addUsedPTO(worker:aboutPTO,data:str) -> str:
+    used = int(worker.usedPTO)
+    if data == "annual":
+        result = used + 1
+        return str(result)
+    elif data == "half":
+        result = used + 0.5
+        return str(result)
+    elif data == "half_half":
+        result = used + 0.25
+        return str(result)
+    else:
+        return str(used)

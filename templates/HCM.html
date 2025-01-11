@@ -3,14 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-  <form hx-post="/lookup" hx-target="#results" hx-swap="innerHTML">
+  <form hx-post="/lookup" hx-target="#lookupResults" hx-swap="innerHTML">
     <input type="text" name="name" placeholder="write..">
     <input type="text" name="number" placeholder="write..">
-    <button type="submit">Submit</button>
+    <button type="submit">조회</button>
   </form>
-  <div id="results"></div>
+  <div id="lookupResults"></div>
+  <form hx-post="/usingPTO" hx-target="#usingPTOresults" hx-swap="innerHTML">
+    <input type="text" name="number" placeholder="write..">
+    <input type="radio" name="time" value="annual">연차
+    <input type="radio" name="time" value="half">반차
+    <input type="radio" name="time" value="half_half">반반차
+    <button type="submit">적용</button>
+  </form>
+  <div id="usingPTOresults"></div>
 </body>
 </html>

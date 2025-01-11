@@ -22,6 +22,14 @@ async def read_number(request:Request):
     data = await request.form()
     return data
 
+#연차 사용 처리
+@app.post("/usingPTO")
+async def using(request:Request):
+    data = await request.form()
+    user = calcul.aboutPTO(data["number"])
+    results = calcul.addUsedPTO(worker=user,data=data["time"])
+    return results
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8081)
