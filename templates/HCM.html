@@ -7,19 +7,11 @@
   <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
+  <div>근무자 정보 조회</div>
   <form hx-post="/lookup" hx-target="#lookupResults" hx-swap="innerHTML">
-    <input type="text" name="name" placeholder="write..">
-    <input type="text" name="number" placeholder="write..">
+    <input type="text" name="name" placeholder="이름">
     <button type="submit">조회</button>
   </form>
   <div id="lookupResults"></div>
-  <form hx-post="/usingPTO" hx-target="#usingPTOresults" hx-swap="innerHTML">
-    <input type="text" name="number" placeholder="write..">
-    <input type="radio" name="time" value="annual">연차
-    <input type="radio" name="time" value="half">반차
-    <input type="radio" name="time" value="half_half">반반차
-    <button type="submit">적용</button>
-  </form>
-  <div id="usingPTOresults"></div>
 </body>
 </html>
