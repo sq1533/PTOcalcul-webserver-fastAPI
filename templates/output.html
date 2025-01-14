@@ -15,10 +15,10 @@
     <button type="submit">적용</button>
     <div id="usingPTOresults"></div>
   </form>
-  <div>추가 연차(일)</div>
+  <div>공휴일 근무(일)</div>
   <form hx-post="/addPTO" hx-target="#addPTOresults" hx-swap="innerHTML">
     <input type="text" name="name" value="{{name}}">
-    <input type="number" name="add" placeholder="추가 연차(일)">
+    <input type="number" name="add" placeholder="공휴일 근무(일)">
     <button type="submit">적용</button>
     <div id="addPTOresults"></div>
   </form>
