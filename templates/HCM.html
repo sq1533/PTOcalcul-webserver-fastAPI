@@ -7,11 +7,14 @@
   <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-  <div>근무자 정보 조회</div>
-  <form hx-post="/lookup" hx-target="#lookupResults" hx-swap="innerHTML">
-    <input type="text" name="name" placeholder="이름">
-    <button type="submit">조회</button>
-  </form>
-  <div id="lookupResults"></div>
+  <main class="container mx-auto w-96 px-2 py-4">
+    <div class="font-bold text-2xl leading-10" hx-get="/today" hx-trigger="load"></div>
+    <div class="font-bold text-lg leading-10">- 근무자 연차정보 조회</div>
+    <form class="box-content h-30 p-4 font-bold text-lg leading-10 bg-gray-200" hx-post="/lookup" hx-target="#lookupResults" hx-swap="innerHTML">
+      <input class="h-12 text-center rounded-lg" type="text" name="name" placeholder="이름">
+      <button class="px-4 py-1 rounded-lg bg-green-300 font-bold hover:bg-green-500" type="submit">조회</button>
+      <div id="lookupResults"></div>
+    </form>
+  </main>
 </body>
 </html>

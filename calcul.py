@@ -14,7 +14,7 @@ class aboutPTO:
         self.user = user
         self.join = info[user]["join"]
         self.usedPTO = info[user]["usedPTO"]
-        self.add = info[user]["addPTO"]
+        self.workHoly = info[user]["workHolyday"]
 
 #입사 후 전체 연차(get)
 def totalPTO(info:aboutPTO) -> str:
@@ -38,7 +38,7 @@ def totalPTO(info:aboutPTO) -> str:
 
 #남은 연차(get)
 def leftPTO(tPTO:str,exPTO:str,uPTO:str) -> str:
-    left = float(tPTO) + float(exPTO) - float(uPTO)
+    left = float(tPTO) + (float(exPTO)*1.5) - float(uPTO)
     return str(left)
 
 #사용 연차 누계(post)
@@ -53,23 +53,12 @@ def addUsedPTO(worker:aboutPTO,data:str) -> str:
     return str(result)
 
 #추가 연차(post)
-def extraPTO(worker:aboutPTO,number:str) -> str:
-    extra = float(worker.add)
-    result = extra + (float(number)*1.5)
+def workHolyday(worker:aboutPTO,number:str) -> str:
+    extra = float(worker.workHoly)
+    result = extra + float(number)
     with open(staffInfoPath, 'r', encoding='utf-8') as j:
         workerinfo = json.load(j)
-    workerinfo[worker.user]["addPTO"] = str(result)
-    with open(staffInfoPath, 'w', encoding='utf-8') as j:
-        json.dump(workerinfo, j, ensure_ascii=False, indent=4)
-    return str(result)
-
-#연차 사용 취소(post)
-def cancelPTO(worker:aboutPTO,number:str) -> str:
-    usedPTO = float(worker.usedPTO)
-    result = usedPTO - float(number)
-    with open(staffInfoPath, 'r', encoding='utf-8') as j:
-        workerinfo = json.load(j)
-    workerinfo[worker.user]["usedPTO"] = str(result)
+    workerinfo[worker.user]["workHolyday"] = str(result)
     with open(staffInfoPath, 'w', encoding='utf-8') as j:
         json.dump(workerinfo, j, ensure_ascii=False, indent=4)
     return str(result)
