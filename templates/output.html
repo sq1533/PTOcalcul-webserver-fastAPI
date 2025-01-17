@@ -9,7 +9,20 @@
 <div>공휴일 근무(일)</div>
 <form hx-post="/addPTO" hx-target="#addPTOresults" hx-swap="innerHTML">
   <input class="w-20 text-center rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" name="name" value="{{name|safe}}">
-  <input class="w-20 text-center rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" type="number" step="1" name="add" value="0">
+  <input class="w-40 text-center rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" type="date" name="add">
   <button class="px-4 rounded-lg bg-green-300 font-bold hover:bg-green-500" type="submit">근무</button>
   <div id="addPTOresults"></div>
+</form>
+<div>공휴일 근무제거(일)</div>
+<form hx-post="/removePTO" hx-target="#removePTOresults" hx-swap="innerHTML">
+  <input class="w-20 text-center rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" name="name" value="{{name|safe}}">
+  <input class="w-40 text-center rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" type="date" name="remove">
+  <button class="px-4 rounded-lg bg-green-300 font-bold hover:bg-green-500" type="submit">제거</button>
+  <div id="removePTOresults"></div>
+</form>
+<div>공휴일 근무확인</div>
+<form hx-post="/lookupWorkHolyday" hx-target="#lookupHolyday" hx-swap="innerHTML">
+  <input class="w-20 text-center rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" name="name" value="{{name|safe}}">
+  <button class="px-4 rounded-lg bg-green-300 font-bold hover:bg-green-500" type="submit">조회</button>
+  <div id="lookupHolyday"></div>
 </form>

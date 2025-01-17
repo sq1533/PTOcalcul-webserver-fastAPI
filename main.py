@@ -39,7 +39,7 @@ async def read_number(request:Request):
         workHolyday = calcul.aboutPTO(data["name"]).workHoly
         userTotalPTO = calcul.totalPTO(info=user)
         userleftPTO = calcul.leftPTO(tPTO=userTotalPTO,exPTO=workHolyday,uPTO=userUsedPTO)
-        results = f"근무자 : {userName}<br>남은연차 : {userleftPTO}일<br>공휴일 근무 : {workHolyday}일<br>사용 연차 : {userUsedPTO}일"
+        results = f"근무자 : {userName}<br>남은연차 : {userleftPTO}일<br>공휴일 근무 : 총 {len(workHolyday)}일<br>사용 연차 : {userUsedPTO}일"
         return templates.TemplateResponse(request=request,name="output.html",context={"results":results,"name":userName})
 
 #연차 사용 처리
@@ -66,11 +66,41 @@ async def add(request:Request):
     if data["name"] not in list(workerinfo.keys()):
         return Response(content="근무자 이름이 잘못되었습니다.")
     elif data["add"] == "":
-        return Response(content="공휴일 근무 일자를 입력해주세요.")
+        return Response(content="공휴일 근무 일자를 선택해주세요.")
     else:
         user = calcul.aboutPTO(data["name"])
-        results = calcul.workHolyday(worker=user,number=data["add"])
-        return Response(content=results)
+        calcul.ADDworkHolyday(worker=user,date=data["add"])
+        return Response(content=f"{data["add"]} 추가 완료")
+
+#추가 연차 제거
+@app.post("/removePTO")
+async def add(request:Request):
+    data = await request.form()
+    with open(staffInfoPath, 'r', encoding='utf-8') as j:
+        workerinfo = json.load(j)
+    if data["name"] not in list(workerinfo.keys()):
+        return Response(content="근무자 이름이 잘못되었습니다.")
+    elif data["remove"] == "":
+        return Response(content="공휴일 근무 일자를 선택해주세요.")
+    else:
+        user = calcul.aboutPTO(data["name"])
+        calcul.REMOVEworkHolyday(worker=user,date=data["remove"])
+        return Response(content=f"{data["remove"]} 삭제 완료")
+
+#공휴일 근무날짜 조회
+@app.post("/lookupWorkHolyday")
+async def lookHolyday(request:Request):
+    data = await request.form()
+    with open(staffInfoPath, 'r', encoding='utf-8') as j:
+        workerinfo = json.load(j)
+    if data["name"] not in list(workerinfo.keys()):
+        return Response(content="근무자 이름이 잘못되었습니다.")
+    else:
+        html_content = "<div>"
+        for item in calcul.aboutPTO(data["name"]).workHoly:
+            html_content += f"{item}<br>"
+        html_content += "</div>"
+        return Response(content=html_content)
 
 if __name__ == "__main__":
     import uvicorn

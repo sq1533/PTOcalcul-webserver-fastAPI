@@ -38,7 +38,7 @@ def totalPTO(info:aboutPTO) -> str:
 
 #남은 연차(get)
 def leftPTO(tPTO:str,exPTO:str,uPTO:str) -> str:
-    left = float(tPTO) + (float(exPTO)*1.5) - float(uPTO)
+    left = float(tPTO) + (len(exPTO)*1.5) - float(uPTO)
     return str(left)
 
 #사용 연차 누계(post)
@@ -52,13 +52,30 @@ def addUsedPTO(worker:aboutPTO,data:str) -> str:
         json.dump(workerinfo, j, ensure_ascii=False, indent=4)
     return str(result)
 
-#추가 연차(post)
-def workHolyday(worker:aboutPTO,number:str) -> str:
-    extra = float(worker.workHoly)
-    result = extra + float(number)
+#날짜 데이터 처리
+def str_to_date(dateData):
+    return datetime.strptime(dateData,"%Y-%m-%d")
+
+#공휴일 근무 날짜 추가
+def ADDworkHolyday(worker:aboutPTO,date:str) -> list:
     with open(staffInfoPath, 'r', encoding='utf-8') as j:
         workerinfo = json.load(j)
-    workerinfo[worker.user]["workHolyday"] = str(result)
+    typeSet = set(workerinfo[worker.user]["workHolyday"])
+    typeSet.add(date)
+    result = sorted(list(typeSet),key=str_to_date,reverse=True)
+    workerinfo[worker.user]["workHolyday"] = result
     with open(staffInfoPath, 'w', encoding='utf-8') as j:
         json.dump(workerinfo, j, ensure_ascii=False, indent=4)
-    return str(result)
+    return result
+
+#공휴일 근무 날짜 추가
+def REMOVEworkHolyday(worker:aboutPTO,date:str) -> list:
+    with open(staffInfoPath, 'r', encoding='utf-8') as j:
+        workerinfo = json.load(j)
+    typeSet = set(workerinfo[worker.user]["workHolyday"])
+    typeSet.discard(date)
+    result = sorted(list(typeSet),key=str_to_date,reverse=True)
+    workerinfo[worker.user]["workHolyday"] = result
+    with open(staffInfoPath, 'w', encoding='utf-8') as j:
+        json.dump(workerinfo, j, ensure_ascii=False, indent=4)
+    return worker.workHoly
