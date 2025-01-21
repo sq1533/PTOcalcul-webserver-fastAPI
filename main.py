@@ -102,6 +102,24 @@ async def lookHolyday(request:Request):
         html_content += "</div>"
         return Response(content=html_content)
 
+#신규입사자 데이터 추가
+@app.post("/joinNew")
+async def lookHolyday(request:Request):
+    data = await request.form()
+    with open(staffInfoPath, 'r', encoding='utf-8') as j:
+        workerinfo = json.load(j)
+    if data["name"] == "":
+        return Response(content="근무자 이름 없음")
+    elif data["name"] in list(workerinfo.keys()):
+        return Response(content="근무자 중복")
+    elif data["join"] == "":
+        return Response(content="입사 날짜를 입력해주세요.")
+    else:
+        workerinfo[data["name"]] = {"join":data["join"],"usedPTO":"0","workHolyday":[]}
+        with open(staffInfoPath, 'w', encoding='utf-8') as j:
+            json.dump(workerinfo, j, ensure_ascii=False, indent=4)
+        return Response(content="근무자 추가 완료")
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8081)

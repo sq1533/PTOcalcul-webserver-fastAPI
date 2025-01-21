@@ -8,7 +8,21 @@
 </head>
 <body>
   <main class="container mx-auto w-96 px-2 py-4">
-    <div class="font-bold text-2xl leading-10" hx-get="/today" hx-trigger="load"></div>
+    <div class="grid grid-cols-2">
+      <div class="font-bold text-2xl leading-10" hx-get="/today" hx-trigger="load"></div>
+      <button class="px-4 py-2 rounded-lg bg-green-300 font-bold hover:bg-green-500" onclick="document.getElementById('popup').showModal()">근무자 생성</button>
+      <dialog class="bg-gray-400" id="popup">
+        <div class="flex flex-col gap-y-2">
+          <form class="flex-1" hx-post="/joinNew" hx-target="#joinNew" hx-swap="innerHTML">
+            <input class="py-1 text-center rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" type="text" name="name">
+            <input class="py-1 text-center rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" type="date" name="join">
+            <button class="px-4 py-1.5 rounded-lg font-bold bg-green-300 hover:bg-green-500" type="submit">생성</button>
+            <div id="joinNew"></div>
+          </form>
+          <button class="px-4 rounded-lg bg-green-300 font-bold hover:bg-green-500" onclick="document.getElementById('popup').close()">닫기</button>          
+        </div>
+      </dialog>
+    </div>
     <div class="font-bold text-lg leading-10">- 근무자 연차정보 조회</div>
     <form class="box-content h-30 p-4 font-bold text-lg leading-10 bg-gray-200" hx-post="/lookup" hx-target="#lookupResults" hx-swap="innerHTML">
       <input class="h-12 text-center rounded-lg" type="text" name="name" placeholder="이름">
