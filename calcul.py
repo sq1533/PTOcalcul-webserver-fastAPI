@@ -28,7 +28,7 @@ def totalPTO(info:aboutPTO) -> str:
     if workYear == 0:
         pto = (todayM - month)
     elif workYear == 1:
-        pto = 12 - month
+        pto = 12 + (12 - month)
     elif workYear == 2:
         pto = 15 + 12 + (12 - month)
     elif  workYear == 3:
