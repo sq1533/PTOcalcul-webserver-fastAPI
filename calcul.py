@@ -25,20 +25,32 @@ def totalPTO(info:aboutPTO) -> str:
     year = float(join[0])
     month = float(join[1])
     workYear = todayY - year
+    #입사
     if workYear == 0:
         pto = (todayM - month)
+    #1년차
     elif workYear == 1:
-        pto = 12 + (12 - month)
+        #1년 미만
+        if todayM < month:
+            pto = todayM + (12 - month)
+        #1년 이상
+        else:
+            pto = 15 + (12 - month)
+    #2년차
     elif workYear == 2:
-        pto = 15 + 12 + (12 - month)
-    elif  workYear == 3:
-        pto = 2*15 + 12 + (12 - month)
+        pto = 2*15 + (12 - month)
+    #3년차
+    elif workYear == 3:
+        pto = 3*15 + (12 - month)
+    #4년차
     elif workYear == 4:
-        pto = 16 + 2*15 + 12 + (12 - month)
+        pto = 16 + 3*15 + (12 - month)
+    #5년차
     elif workYear == 5:
-        pto = 2*16 + 2*15 + 12 + (12 - month)
+        pto = 2*16 + 3*15 + (12 - month)
+    #6년차 이상
     else:
-        pto = (workYear-5)*17 + 2*16 + 2*15 + 12 + (12 - month)
+        pto = (workYear-5)*17 + 2*16 + 3*15 + (12 - month)
     return str(pto)
 
 #남은 연차(get)
